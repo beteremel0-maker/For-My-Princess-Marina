@@ -4,12 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مفاجأة لروح قلبي</title>
+    <!-- استدعاء خط عربي أنيق ورومانسي -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Amiri', serif;
         }
 
         body {
@@ -57,9 +62,10 @@
 
         #login-screen h2 {
             color: #e60023;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             margin-bottom: 20px;
             line-height: 1.5;
+            font-weight: bold;
         }
 
         #login-screen input {
@@ -68,7 +74,7 @@
             border: 2px solid #ffccd1;
             border-radius: 10px;
             text-align: center;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             outline: none;
             margin-bottom: 15px;
             transition: 0.3s;
@@ -84,7 +90,7 @@
             border: none;
             padding: 12px 25px;
             border-radius: 10px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
             width: 100%;
             font-weight: bold;
@@ -157,7 +163,7 @@
 
         .envelope-title {
             color: #ffffff;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
             font-weight: bold;
             z-index: 2;
             margin-top: 5px;
@@ -173,29 +179,48 @@
             border-radius: 15px;
             margin-top: 15px;
             width: 280px;
-            font-size: 0.95rem;
-            color: #333;
-            line-height: 1.7;
-            animation: fadeIn 0.5s ease;
+            font-size: 1.15rem;
+            color: #222;
+            line-height: 1.8;
             text-align: right;
+        }
+
+        .typed-text {
+            display: inline;
+        }
+
+        .cursor {
+            display: inline-block;
+            background-color: #e60023;
+            width: 3px;
+            height: 1.1rem;
+            margin-right: 3px;
+            animation: blink 0.6s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         .card-message img {
             width: 100%;
             border-radius: 10px;
-            margin-top: 12px;
+            margin-top: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: none; /* بتظهر بعد ما الكتابة تخلص */
+            animation: fadeIn 0.8s ease;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         /* الجملة الأخيرة */
         .final-message {
             margin-top: 40px;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #e60023;
             font-weight: bold;
             line-height: 1.8;
@@ -227,56 +252,56 @@
             
             <!-- ظرف 1 -->
             <div class="envelope-wrapper">
-                <div class="envelope" onclick="toggleCard('msg1')">
+                <div class="envelope" onclick="openEnvelope(1, msgText1, 'img1')">
                     <span class="envelope-heart">♥️</span>
                 </div>
                 <div id="msg1" class="card-message">
-                    <p>دي يعمري صورتنا الوحيدة اللي عندي لينا سوا كدة يموزتي ♥️😍 و دي كانت يوم ٩ شهر ٧ يعمري و كان يوم تحفة موووت اصلا انا فاكره كدة ♥️😂 زي كل ايامي معاكي يا روح قلبي و عمري انتي ♥️♥️🥰🫂 دي انا حاططها خلفية موبايلي اصلا من جوا يعمري و خلفية شات الواتس بتاع رقمي كمان من كتر م بحبها بالرغم اننا متنكرين فيها كدة 😂😂♥️ اليوم ده انا قولتلك بحبك ٦ مرات فيه كدة و فاكرهم يعمري ♥️♥️🥰🫂</p>
-                    <img src="photo1.jpg" alt="ذكرى جميلة">
+                    <span id="text1" class="typed-text"></span><span id="cursor1" class="cursor"></span>
+                    <img id="img1" src="photo1.jpg" alt="ذكرى جميلة">
                 </div>
             </div>
 
             <!-- ظرف 2 -->
             <div class="envelope-wrapper">
-                <div class="envelope" onclick="toggleCard('msg2')">
+                <div class="envelope" onclick="openEnvelope(2, msgText2, 'img2')">
                     <span class="envelope-heart">♥️</span>
                 </div>
                 <div id="msg2" class="card-message">
-                    <p>دي يا روح قلبي الصورة اللي نزلتيها ستوري يوم م رجعتي من البلد لما وصلتك يموزتي ♥️♥️♥️♥️🥰🥰😂 بجد كان يوم تحفة برضو يعمري ساعتها و متتخيليش بامانة الفرحة و الانبساط ساعتها يا روح قلبي لما كنت جاي اوصلك كدة و فرحان انك معايا يعمري يارب دايما معايا يا روح قلبي و دايما اعرف اعملك اي حاجة يعمري نفسك فيها يا اجمل حاجة في حياتي كلها يا نور عيني ♥️♥️♥️🥰🥰🫂😍 و كالعادة يعمري كان يوم تحفة زي كل ايامي معاكي يا روح قلبي و انتي بتحلي اي يوم بجد و بتحلي اي حاجة اصلا يا نور عيني ♥️♥️♥️🥰🫂😍</p>
-                    <img src="photo2.jpg" alt="ذكرى جميلة">
+                    <span id="text2" class="typed-text"></span><span id="cursor2" class="cursor"></span>
+                    <img id="img2" src="photo2.jpg" alt="ذكرى جميلة">
                 </div>
             </div>
 
-            <!-- ظرف 3 (بدون صورة + عنوان خاص) -->
+            <!-- ظرف 3 -->
             <div class="envelope-wrapper">
-                <div class="envelope" onclick="toggleCard('msg3')">
+                <div class="envelope" onclick="openEnvelope(3, msgText3, null)">
                     <span class="envelope-heart">♥️</span>
                     <span class="envelope-title">دوسي هنا يا مارينا دي رسالة مهمة اووي ♥️😂</span>
                 </div>
                 <div id="msg3" class="card-message">
-                    <p>احنا انهاردة يعمري كملنا ٤ شهور سوا بالظبط و يارب دايما العمر كلو سوا يا نور عيني ♥️♥️🥰😍 كملنا ١٢٠ يوم مع بعض ١٢٠ يوم يعمري بكلمك كل يوم و بقرفك ♥️♥️🥰😂 و ساعات بتنكدي عليا برضو بس علي قلبي زي العسل يا روح قلبي و كل حياتي اصلا ♥️♥️♥️🥰😍🫂 و حرفيا مش ناسي اي حاجة قولتهالي في اي يوم يعمري كدة من كل كلامك الحلو ده ♥️🥰😍 كفاية وجودك جنبي كل م بحتاجك يعمري و وجودك جنبي وقت زعلي علي جدتي لما اتوفت ♥️♥️🥰😍🫂 و وجودك جنبي في اي حاجة عموما انا بجد معنديش اغلي منك في حياتي كلها انتي عمري و قلبي و حياتي و بنتي و صحبتي و مراتي و كل حاجة ليا انا بحبك اوووووووووي بجد يا روح قلبي ♥️♥️♥️🥰🫂 ربنا يخليكي ليا يا اجمل حاجة في عمري كلو و يديمك نعمة في حياتي يا روح قلبي ♥️♥️♥️🥰🫂😍 عارفة يعمري ١٢٠ يوم كدة حرفيا وانا في كل ليلة بفكر فيكي قبل م انام و اول م اصحي كمان ♥️♥️🥰🫂 و هفضل طول عمري بفكر فيكي و في دماغي و عمرك م تغيبي عنها لحظة يا اجمل بنوتة شافتها عيني و روح قلبي اصلا حرفيا ♥️♥️♥️♥️🥰🫂😍</p>
+                    <span id="text3" class="typed-text"></span><span id="cursor3" class="cursor"></span>
                 </div>
             </div>
 
             <!-- ظرف 4 -->
             <div class="envelope-wrapper">
-                <div class="envelope" onclick="toggleCard('msg4')">
+                <div class="envelope" onclick="openEnvelope(4, msgText4, 'img4')">
                     <span class="envelope-heart">♥️</span>
                 </div>
                 <div id="msg4" class="card-message">
-                    <p>دي بقي ذكرة لينا كدة ده جيم يعمري فوزتي فيه انتي في سكرو الاربع راوندات ب صفر كدة ذكري مميزة برضو زيك بالظبط قولت تيجي معانا كدة يعمري ♥️♥️🥰😂😂</p>
-                    <img src="photo5.jpg" alt="ذكرياتنا">
+                    <span id="text4" class="typed-text"></span><span id="cursor4" class="cursor"></span>
+                    <img id="img4" src="photo5.jpg" alt="ذكرياتنا">
                 </div>
             </div>
 
-            <!-- ظرف 5 (بدون صورة + عنوان خاص) -->
+            <!-- ظرف 5 -->
             <div class="envelope-wrapper">
-                <div class="envelope" onclick="toggleCard('msg5')">
+                <div class="envelope" onclick="openEnvelope(5, msgText5, null)">
                     <span class="envelope-heart">♥️</span>
                     <span class="envelope-title">كلمتين لروح قلبي ♥️🥰🫂</span>
                 </div>
                 <div id="msg5" class="card-message">
-                    <p>انا بجد حرفيا يا روح قلبي دول احسن ٤ شهور في حياتي كلها ومميزين زيك كدة بالظبط يا روح قلبي كلهم ايام حلوة كدة زيك برضو ♥️♥️🥰🫂😂 <br><br>و بجد يعمري عايز اقولك كلمتين من قلبي كدة حرفيا انا بجد بعشقك اوووووي و بحبك اووووي و مش شايف غيرك في الدنيا كلها بجد انتي احلي حاجة في حياتي كلها و روح قلبي اللي بموت فيها ♥️♥️♥️🥰🫂😍 و يارب دايما كدة يعمري ايامنا كلها تكون حلوة و هي حلوة بيكي اصلا يموزتي انتي ♥️♥️♥️🥰🫂😍</p>
+                    <span id="text5" class="typed-text"></span><span id="cursor5" class="cursor"></span>
                 </div>
             </div>
 
@@ -284,12 +309,21 @@
 
         <!-- الجملة الأخيرة -->
         <div class="final-message">
-            بحبك و بمووووت فيكي و بعشقك يا روح قلبي و دنيتي انتي ♥️♥️🥰🫂🌚
+            بحبك و بمووووووووووت فيكي و بعشقك يا روح قلبي و دنيتي انتي ♥️♥️🥰🫂🌚
         </div>
 
     </div>
 
     <script>
+        // نصوص الرسائل
+        const msgText1 = "دي يعمري صورتنا الوحيدة اللي عندي لينا سوا كدة يموزتي ♥️😍 و دي كانت يوم ٩ شهر ٧ يعمري و كان يوم تحفة موووت اصلا انا فاكره كدة ♥️😂 زي كل ايامي معاكي يا روح قلبي و عمري انتي ♥️♥️🥰🫂 دي انا حاططها خلفية موبايلي اصلا من جوا يعمري و خلفية شات الواتس بتاع رقمي كمان من كتر م بحبها بالرغم اننا متنكرين فيها كدة 😂😂♥️ اليوم ده انا قولتلك بحبك ٦ مرات فيه كدة و فاكرهم يعمري ♥️♥️🥰🫂";
+        const msgText2 = "دي يا روح قلبي بقي الصورة اللي نزلتيها ستوري يوم م رجعتي من البلد لما وصلتك يموزتي ♥️♥️♥️♥️🥰🥰😂😂 بحاول اجمع كل ذكري يعمري كدة ♥️♥️😂😂😂 بجد كان يوم تحفة برضو يعمري ساعتها و متتيخليش بامانة الفرحة و الانبساط ساعتها يا روح قلبي لما كنت جاي اوصلك كدة و فرحان انك معايا يعمري يارب دايما معايا يا روح قلبي و دايما اعرف اعملك اي حاجة يعمري نفسك فيها يا اجمل حاجة في حياتي كلها يا نور عيني ♥️♥️♥️🥰🥰🫂😍 و كالعادة يعمري كان يوم تحفة زي كل ايامي معاكي يا روح قلبي و انتي بتحلي اي يوم بجد و بتحلي اي حاجة اصلا يا نور عيني ♥️♥️♥️🥰🫂😍";
+        const msgText3 = "احنا انهاردة يعمري كملنا ٤ شهور سوا بالظبط و يارب دايما العمر كلو سوا يا نور عيني ♥️♥️🥰😍 كملنا ١٢٠ يوم مع بعض ١٢٠ يوم يعمري بكلمك كل يوم و بقرفك و برخم عليكي و مش بسببك تنام ساعات كمان ♥️♥️🥰😂 و ساعات بتنكدي عليا برضو بس علي قلبي زي العسل والله يا روح قلبي و كل حياتي اصلا ♥️♥️♥️🥰😍🫂 و حرفيا مش ناسي اي حاجة قولتهالي في اي يوم يعمري كدة من كل كلامك الحلو ده ♥️🥰😍 كفاية وجودك جنبي كل ما بحتاجلك يعمري و وجودك جنبي وقت زعلي علي جدتي لما اتوفت ♥️♥️🥰😍🫂 و وجودك جنبي في اي حاجة عموما انا بجد معنديش اغلي منك في حياتي كلها انتي عمري و قلبي و حياتي و بنتي و صحبتي و مراتي و كل حاجة ليا انا بحبك اوووووووووي بجد يا روح قلبي ♥️♥️♥️🥰🫂🥺🥺 ربنا يخليكي ليا يا اجمل حاجة في عمري كلو و يديمك نعمة في حياتي يا روح قلبي ♥️♥️♥️🥰🫂😍 عارفة يعمري ١٢٠ يوم كدة حرفيا وانا في كل ليلة بفكر فيكي قبل م انام و اول م اصحي كمان ♥️♥️🥰🫂 و هفضل طول عمري بفكر فيكي و في دماغي و عمرك م تغيبي عنها لحظة يا اجمل بنوتة شافتها عيني و روح قلبي اصلا حرفيا ♥️♥️♥️♥️🥰🫂😍";
+        const msgText4 = "دي بقي ذكرة لينا كدة ده جيم يعمري فوزتي فيه انتي في سكرو الاربع راوندات ب صفر كدة ذكري مميزة برضو زيك بالظبط قولت تيجي معانا كدة يعمري ♥️♥️🥰😂😂";
+        const msgText5 = "انا بجد حرفيا يا روح قلبي دول احسن ٤ شهور في حياتي كلها ومميزين زيك كدة بالظبط يا روح قلبي كلهم ايام حلوة كدة زيك برضو ♥️♥️🥰🫂😂 \n\nو بجد يعمري عايز اقولك كلمتين من قلبي كدة حرفيا انا بجد بعشقك اوووووي و بحبك اووووي و مش شايف غيرك في الدنيا كلها بجد انتي احلي حاجة في حياتي كلها و روح قلبي اللي بموت فيها ♥️♥️♥️🥰🫂😍 و يارب دايما كدة يعمري ايامنا كلها تكون حلوة و هي حلوة بيكي اصلا يموزتي انتي ♥️♥️♥️🥰🫂😍";
+
+        let isTyping = {};
+
         // تشغيل القلوب المتساقطة
         function createHeart() {
             const heart = document.createElement('div');
@@ -313,26 +347,51 @@
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 
-                // تشغيل الأغنية فور فتح الصفحة
                 const music = document.getElementById('bg-music');
                 music.play().catch(error => {
                     console.log("تعذر التشغيل التلقائي");
                 });
             } else {
-                alert("الباسوورد مش صح يا جميل 😉 حاول تاني!");
+                alert("الباسوورد مش صح يا روح قلبي 😉 حاولي تاني!");
             }
         }
 
-        // فتح وإغلاق الجوابات
-        function toggleCard(id) {
-            const msg = document.getElementById(id);
-            if (msg.style.display === "block") {
-                msg.style.display = "none";
-            } else {
-                msg.style.display = "block";
+        // فتح الظرف وكتابة الكلام لايف
+        function openEnvelope(id, text, imgId) {
+            const msgBox = document.getElementById('msg' + id);
+            const textContainer = document.getElementById('text' + id);
+            const cursor = document.getElementById('cursor' + id);
+
+            if (msgBox.style.display === "block") {
+                return; // لو مفتوح بالفعل مايعملش حاجة
             }
+
+            msgBox.style.display = "block";
+            textContainer.innerHTML = "";
+            cursor.style.display = "inline-block";
+
+            if (imgId) {
+                document.getElementById(imgId).style.display = "none";
+            }
+
+            let i = 0;
+            isTyping[id] = true;
+
+            function typeWriter() {
+                if (i < text.length) {
+                    textContainer.innerHTML += text.charAt(i) === '\n' ? '<br>' : text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 35); // سرعة الكتابة
+                } else {
+                    cursor.style.display = "none"; // إخفاء المؤشر بعد انتهاء الكتابة
+                    if (imgId) {
+                        document.getElementById(imgId).style.display = "block"; // إظهار الصورة بعد الكلام
+                    }
+                }
+            }
+
+            typeWriter();
         }
     </script>
 </body>
 </html>
-
