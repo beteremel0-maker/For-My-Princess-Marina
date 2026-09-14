@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مفاجأة لروح قلبي</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* القلوب المتساقطة الحمراء */
+        .heart-fall {
+            position: fixed;
+            top: -10%;
+            color: #e60023;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            z-index: 100;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* شاشة كلمة السر */
+        #login-screen {
+            background: #ffffff;
+            border: 2px solid #ffe6e8;
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(230, 0, 35, 0.1);
+            text-align: center;
+            max-width: 350px;
+            width: 100%;
+            z-index: 10;
+        }
+
+        #login-screen h2 {
+            color: #e60023;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        #login-screen input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ffccd1;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.1rem;
+            outline: none;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+
+        #login-screen input:focus {
+            border-color: #e60023;
+        }
+
+        #login-screen button {
+            background: #e60023;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(230, 0, 35, 0.2);
+        }
+
+        /* المحتوى الرئيسي */
+        #main-content {
+            display: none;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            z-index: 10;
+            padding-bottom: 40px;
+        }
+
+        /* الجوابات الكبيرة الحمراء */
+        .envelopes-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .envelope-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .envelope {
+            width: 280px;
+            height: 170px;
+            background-color: #e60023;
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(230, 0, 35, 0.25);
+            transition: transform 0.3s ease;
+            padding: 10px;
+        }
+
+        .envelope:hover {
+            transform: scale(1.03);
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-top: 90px solid #c4001d;
+        }
+
+        .envelope-heart {
+            color: #ffffff;
+            font-size: 35px;
+            z-index: 2;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .envelope-title {
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: bold;
+            z-index: 2;
+            margin-top: 5px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        /* الرسالة والصورة جوة الجواب */
+        .card-message {
+            display: none;
+            background: #fff0f2;
+            border: 2px dashed #ffccd1;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 15px;
+            width: 280px;
+            font-size: 0.95rem;
+            color: #333;
+            line-height: 1.7;
+            animation: fadeIn 0.5s ease;
+            text-align: right;
+        }
+
+        .card-message img {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* الجملة الأخيرة */
+        .final-message {
+            margin-top: 40px;
+            font-size: 1.2rem;
+            color: #e60023;
+            font-weight: bold;
+            line-height: 1.8;
+            padding: 20px;
+            background: #fff0f2;
+            border-radius: 15px;
+            border: 2px dashed #e60023;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الأغنية تشتغل في الخلفية -->
+    <audio id="bg-music" loop>
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- شاشة كلمة السر -->
+    <div id="login-screen">
+        <h2>دي مفاجأة لروح قلبي وبنوتي ♥️🥰😍</h2>
+        <input type="password" id="pass-input" placeholder="اكتبي الرقم السري هنا...">
+        <button onclick="checkPassword()">افتحي المفاجأة ✨</button>
+    </div>
+
+    <!-- المحتوى بعد الباسوورد -->
+    <div id="main-content">
+        
+        <div class="envelopes-container">
+            
+            <!-- ظرف 1 -->
+            <div class="envelope-wrapper">
+                <div class="envelope" onclick="toggleCard('msg1')">
+                    <span class="envelope-heart">♥️</span>
+                </div>
+                <div id="msg1" class="card-message">
+                    <p>دي يعمري صورتنا الوحيدة اللي عندي لينا سوا كدة يموزتي ♥️😍 و دي كانت يوم ٩ شهر ٧ يعمري و كان يوم تحفة موووت اصلا انا فاكره كدة ♥️😂 زي كل ايامي معاكي يا روح قلبي و عمري انتي ♥️♥️🥰🫂 دي انا حاططها خلفية موبايلي اصلا من جوا يعمري و خلفية شات الواتس بتاع رقمي كملن من كتر م بحبها بالرغم اننا متنكرين فيها اليوم ده انا قولتلك بحبك ٦ مرات فيه كدة و فاكرهم يعمري ♥️♥️🥰🫂</p>
+                    <img src="photo1.jpg" alt="ذكرى جميلة">
+                </div>
+            </div>
+
+            <!-- ظرف 2 -->
+            <div class="envelope-wrapper">
+                <div class="envelope" onclick="toggleCard('msg2')">
+                    <span class="envelope-heart">♥️</span>
+                </div>
+                <div id="msg2" class="card-message">
+                    <p>دي يا روح قلبي الصورة اللي نزلتيها ستوري يوم م رجعتي من البلد لما وصلتك يموزتي ♥️♥️♥️♥️🥰🥰😂 بجد كان يوم تحفة برضو يعمري ساعتها و متتخليش بامانة الفرحة و الانبساط ساعتها يا روح قلبي لما كنت جاي اوصلك كدة ووفرحان انك معايا يعمري يارب دايما معايا يا روح قلبي و دايما اعرف اعملك اي حاجة يعمري نفسك فيها يا اجمل حاجة في حياتي كلها يا نور عيني ♥️♥️♥️🥰🥰🫂😍 و كالعادة يعمري كان يوم تحفة زي كل ايامي معاكي يا روح قلبي و انتي بتحلي اي يوم بجد و بتحلي اي حاجة اصلا يا نو عيني ♥️♥️♥️🥰🫂😍</p>
+                    <img src="photo2.jpg" alt="ذكرى جميلة">
+                </div>
+            </div>
+
+            <!-- ظرف 3 (بدون صورة + عنوان خاص) -->
+            <div class="envelope-wrapper">
+                <div class="envelope" onclick="toggleCard('msg3')">
+                    <span class="envelope-heart">♥️</span>
+                    <span class="envelope-title">دوسي هنا يا مارينا دي رسالة مهمة اووي ♥️😂</span>
+                </div>
+                <div id="msg3" class="card-message">
+                    <p>احنا انهاردة يعمري كملنا ٤ شهور سوا بالظبط و يارب دايما العمر كلو سوا يا نور عيني ♥️♥️🥰😍 كملنا ١٢٠ يوم مع بعض ١٢٠ يوم يعمري بكلمك كل يوم و بقرفك ♥️♥️🥰😂 و ساعات بتنكدي عليا برضو بس علي قلبي زي العسل يا روح قلبي و كل حياتي اصلا ♥️♥️♥️🥰😍🫂 و حرفيا مش ناسي اي حاجة قولتهالي في اي يوم يعمري كدة من كل كلامك الحلو ده ♥️🥰😍 كفاية وجودك جنبي كل م بحتاجك يعمري و وجودك جنبي وقت زعلي علي جدتي لما اتوفت ♥️♥️🥰😍🫂 و وجودك جنبي في اي حاجة عموما انا بجد معنديش اغلي منك في حياتي كلها انتي عمري و قلبي و حياتي و بنتي و صحبتي و مراتي و كل حاجة ليا انا بحبك اوووووووووي بجد يا روح قلبي ♥️♥️♥️🥰🫂 ربنا يخليكي ليا يا اجمل حاجة في عمري كلو و يديمك نعمة في حياتي يا روح قلبي ♥️♥️♥️🥰🫂😍 عارفة يعمري ١٢٠ يوم كدة حرفيا وانا في كل ليلة بفكر فيكي قبل م انام و اول م اصحي كمان ♥️♥️🥰🫂 و هفضل طول عمري بفكر فيكي و في دماغي و عمرك م تغيبي عنها لحظة يا اجمل بنوتة شافتها عيني و روح قلبي اصلا حرفيا ♥️♥️♥️♥️🥰🫂😍</p>
+                </div>
+            </div>
+
+            <!-- ظرف 4 -->
+            <div class="envelope-wrapper">
+                <div class="envelope" onclick="toggleCard('msg4')">
+                    <span class="envelope-heart">♥️</span>
+                </div>
+                <div id="msg4" class="card-message">
+                    <p>دي بقي ذكرة لينا كدة ده جيم يعمري فوزتي فيه انتي في سكرو الاربع راوندات ب صفر كدة ذكري مميزة برضو زيك بالظبط قولت تيجي معانا كدة يعمري ♥️♥️🥰😂😂</p>
+                    <img src="photo5.jpg" alt="ذكرياتنا">
+                </div>
+            </div>
+
+            <!-- ظرف 5 (بدون صورة + عنوان خاص) -->
+            <div class="envelope-wrapper">
+                <div class="envelope" onclick="toggleCard('msg5')">
+                    <span class="envelope-heart">♥️</span>
+                    <span class="envelope-title">كلمتين لروح قلبي ♥️🥰🫂</span>
+                </div>
+                <div id="msg5" class="card-message">
+                    <p>انا بجد حرفيا يا روح قلبي دول احسن ٤ شهور في حياتي كلها ومميزين زيك كدة بالظبط يا روح قلبي كلهم ايام حلوة كدة زيك برضو ♥️♥️🥰🫂😂 <br><br>و بجد يعمري عايز اقولك كلمتين من قلبي كدة حرفيا انا بجد بعشقك اوووووي و بحبك اووووي و مش شايف غيرك في الدنيا كلها بجد انتي احلي حاجة في حياتي كلها و روح قلبي اللي بموت فيها ♥️♥️♥️🥰🫂😍 و يارب دايما كدة يعمري ايامنا كلها تكون حلوة و هي حلوة بيكي اصلا يموزتي انتي ♥️♥️♥️🥰🫂😍</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- الجملة الأخيرة -->
+        <div class="final-message">
+            بحبك و بمووووت فيكي و بعشقك يا روح قلبي و دنيتي انتي ♥️♥️🥰🫂🌚
+        </div>
+
+    </div>
+
+    <script>
+        // تشغيل القلوب المتساقطة
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-fall');
+            heart.innerHTML = '♥️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+        setInterval(createHeart, 300);
+
+        // التحقق من الباسوورد وتشغيل الموسيقى
+        function checkPassword() {
+            const password = document.getElementById('pass-input').value;
+            if (password === "1552026") {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                
+                // تشغيل الأغنية فور فتح الصفحة
+                const music = document.getElementById('bg-music');
+                music.play().catch(error => {
+                    console.log("تعذر التشغيل التلقائي");
+                });
+            } else {
+                alert("الباسوورد مش صح يا جميل 😉 حاول تاني!");
+            }
+        }
+
+        // فتح وإغلاق الجوابات
+        function toggleCard(id) {
+            const msg = document.getElementById(id);
+            if (msg.style.display === "block") {
+                msg.style.display = "none";
+            } else {
+                msg.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
+
